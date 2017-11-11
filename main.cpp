@@ -8,6 +8,7 @@ using namespace std;
 #define ERROR_MISSING_INPUT -1
 #define ERROR_STAT_INFO -2
 #define ERROR_STAT_INVALID_MODE -3
+#define ERROR_NOT_IMPLEMENT_YET -4
 
 void help()
 {
@@ -52,7 +53,8 @@ int main(int argc, char* argv[])
     }
 
     if (s.st_mode & S_IFDIR) {
-        cout << "is a directory" << endl;
+        cout << "is a directory, not implement yet" << endl;
+        return ERROR_NOT_IMPLEMENT_YET;
     } else if(s.st_mode & S_IFREG) {
         cout << "it is a file" << endl;
     } else {
