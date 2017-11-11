@@ -2,6 +2,7 @@
 #include "cl.cpp"
 #include <stdio.h>
 #include <sys/stat.h>
+#include "validator.cpp"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ int main(int argc, char* argv[])
         return ERROR_MISSING_INPUT;
     }
 
-    char* inputPath = 0x00;
+    char* inputPath = NULL;
 
     if (commandLine.is("-i")) {
         inputPath = commandLine.get("-i");
@@ -56,6 +57,7 @@ int main(int argc, char* argv[])
         cout << "is a directory, not implement yet" << endl;
         return ERROR_NOT_IMPLEMENT_YET;
     } else if(s.st_mode & S_IFREG) {
+        Validator validator(inputPath);
         cout << "it is a file" << endl;
     } else {
         return ERROR_STAT_INVALID_MODE;
