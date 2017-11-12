@@ -11,6 +11,8 @@ using namespace std;
 #define ERROR_STAT_INVALID_MODE -3
 #define ERROR_NOT_IMPLEMENT_YET -4
 
+#define ERROR_INVALID -255
+
 void help()
 {
     cout << "Help message for postgresman:" << endl;
@@ -58,17 +60,12 @@ int main(int argc, char* argv[])
         return ERROR_NOT_IMPLEMENT_YET;
     } else if(s.st_mode & S_IFREG) {
         Validator validator(inputPath);
-        cout << "it is a file" << endl;
+        if (!validator.validate()) {
+            cout << "this is invalid" << endl;
+            return ERROR_INVALID;
+        }
     } else {
         return ERROR_STAT_INVALID_MODE;
-    }
-
-    FILE * pFile;
-    pFile = fopen(inputPath, "r");
-
-    if (pFile != NULL) {
-        cout << "i open it" << endl;
-        fclose(pFile);
     }
 
     return 0;
