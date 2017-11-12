@@ -1,6 +1,5 @@
 #include "io_file.cpp"
-#include "lexer/lexer.cpp"
-#include "lexer/lexer_sql.cpp"
+#include "lexer/lexer.h"
 
 class Validator
 {

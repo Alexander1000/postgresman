@@ -11,4 +11,5 @@ public:
     }
 protected:
     IOBuffer* buffer;
+    KeywordList keywords;
 };
