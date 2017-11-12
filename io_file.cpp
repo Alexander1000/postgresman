@@ -24,12 +24,20 @@ public:
             return -1;
         }
 
-        return 0;
+        size_t size = fread(buffer, sizeof(char), length, hFile);
+        return (int) size;
     }
 
     int write(char* buffer, int length)
     {
-        return 0;
+        hFile = this->getHandler();
+
+        if (hFile == NULL) {
+            return -1;
+        }
+
+        size_t size = fwrite(buffer, sizeof(char), length, hFile);
+        return (int) size;
     }
 private:
     char* fileName;
