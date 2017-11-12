@@ -16,7 +16,13 @@ public:
         }
     }
 
-    int read(int length, char* buffer)
+    /**
+     * Чтение из файла
+     * @param buffer
+     * @param length
+     * @return
+     */
+    int read(char* buffer, int length)
     {
         hFile = this->getHandler();
 
@@ -28,6 +34,12 @@ public:
         return (int) size;
     }
 
+    /**
+     * Запись в файл
+     * @param buffer
+     * @param length
+     * @return
+     */
     int write(char* buffer, int length)
     {
         hFile = this->getHandler();
@@ -44,6 +56,9 @@ private:
 
     FILE* hFile;
 
+    /**
+     * @return
+     */
     FILE* getHandler()
     {
         if (this->hFile != NULL) {

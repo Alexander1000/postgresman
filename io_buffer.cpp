@@ -3,11 +3,11 @@ class IOBuffer
 public:
     /**
      * Чтение из IO length байт
-     * @param length
      * @param char*
+     * @param length
      * @return int количество прочитанных данных
      */
-    virtual int read(int length, char* buffer) = 0;
+    virtual int read(char* buffer, int length) = 0;
 
     /**
      * Запись в IO данные в buffer, length байт

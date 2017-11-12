@@ -6,6 +6,9 @@ public:
         this->buffer = buffer;
     }
 
+    void parse()
+    {}
+
 private:
     IOBuffer* buffer;
 };
