@@ -1,5 +1,6 @@
 #include "io_file.cpp"
 #include "lexer.cpp"
+#include "lexer_sql.cpp"
 
 class Validator
 {
@@ -8,7 +9,7 @@ public:
     {
         this->fileName = fileName;
         IOFile fileBuffer(fileName);
-        Lexer lexer(&fileBuffer);
+        LexerSQL lexer(&fileBuffer);
         this->lexer = &lexer;
     }
 

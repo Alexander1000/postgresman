@@ -7,8 +7,8 @@ public:
     }
 
     void parse()
-    {}
-
-private:
+    {
+    }
+protected:
     IOBuffer* buffer;
 };
