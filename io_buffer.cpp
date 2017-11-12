@@ -1,10 +1,10 @@
-class IOReader
+class IOBuffer
 {
 public:
-    IOReader()
+    IOBuffer()
     {
     }
-    
+
     /**
      * Чтение из IO length байт
      * @param length
