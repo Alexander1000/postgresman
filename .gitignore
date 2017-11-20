@@ -2,3 +2,4 @@
 cmake-build-debug
 bin
 !bin/.gitkeep
+sample/sample_02.sql
