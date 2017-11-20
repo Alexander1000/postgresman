@@ -1,4 +1,4 @@
-#include "io_file.cpp"
+#include "buffer/io_buffer.h"
 #include "lexer/lexer.h"
 
 class Validator
@@ -7,9 +7,13 @@ public:
     Validator(char *fileName)
     {
         this->fileName = fileName;
-        IOFile fileBuffer(fileName);
-        LexerSQL lexer(&fileBuffer);
-        this->lexer = &lexer;
+        IOFileReader* fileBuffer = new IOFileReader(fileName);
+        this->lexer = new LexerSQL(fileBuffer);
+    }
+
+    ~Validator()
+    {
+        delete this->lexer;
     }
 
     bool validate()

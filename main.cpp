@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include "validator.cpp"
+#include "hexdump.cpp"
 
 using namespace std;
 

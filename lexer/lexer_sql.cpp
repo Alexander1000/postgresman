@@ -1,15 +1,30 @@
 class LexerSQL : public Lexer
 {
 public:
-    LexerSQL(IOBuffer *buffer) : Lexer(buffer)
+    LexerSQL(IOReader* reader) : Lexer(reader)
     {
         const char* keywords[] = {
                 "create",
                 "or",
-                "replace"
+                "replace",
+                "insert",
+                "into",
+                "values",
+                "table",
+                "alter",
+                "function",
+                "declare",
+                "begin",
+                "end",
+                "as",
+                "language",
+                "in",
+                "out"
         };
 
-        for (int i = 0; i < 3; ++i) {
+        int count = sizeof(keywords) / sizeof(char*);
+
+        for (int i = 0; i < count; ++i) {
             this->keywords.addValue((char*) keywords[i]);
         }
     }
