@@ -173,7 +173,7 @@ protected:
                     return;
                 }
 
-                if (this->isLetter(symbol)) {
+                if (this->isLetter(symbol) || symbol == '_') {
                     this->appendCurrentLexeme(symbol);
                     this->mode = LEXER_MODE_LEXEME_WORD;
                     return;
