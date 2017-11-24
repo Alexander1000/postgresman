@@ -5,4 +5,6 @@
 #include "lexeme_numeric.cpp"
 #include "lexeme_keyword.cpp"
 
+#include "parenthesis_open.cpp"
+
 #include "token_stream.cpp"
