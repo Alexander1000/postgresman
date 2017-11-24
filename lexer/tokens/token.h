@@ -12,5 +12,6 @@
 #include "square_bracket_close.cpp"
 
 #include "comma.cpp"
+#include "semicolon.cpp"
 
 #include "token_stream.cpp"
