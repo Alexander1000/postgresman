@@ -76,7 +76,7 @@ public:
 
         char *pBlock = NULL;
 
-        while (readLength < length) {
+        while (readLength < length && this->readPosition < this->writePosition) {
             leftRead = length - readPosition;
             lengthForRead = leftRead;
             currentReadBlock = this->readPosition / IO_MEMORY_BLOCK_SIZE;
@@ -92,7 +92,7 @@ public:
             // читаем страницу данных
             pBlock = this->blocks.at(currentReadBlock);
             // копируем в буфер прочитанные данные
-            memcpy(buffer + readLength, pBlock + this->readPosition, lengthForRead);
+            memcpy(buffer + readLength, pBlock + (this->readPosition % IO_MEMORY_BLOCK_SIZE), lengthForRead);
 
             this->readPosition += lengthForRead;
             readLength += lengthForRead;

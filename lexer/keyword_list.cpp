@@ -33,6 +33,7 @@ public:
 
             if (strcmp(value, pKeyword) == 0) {
                 isExists = true;
+                break;
             }
         }
 

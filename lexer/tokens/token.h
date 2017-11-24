@@ -15,4 +15,6 @@
 #include "semicolon.cpp"
 #include "dot.cpp"
 
+#include "custom_quote.cpp"
+
 #include "token_stream.cpp"

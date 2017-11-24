@@ -4,6 +4,9 @@
 #define LEXER_MODE_LEXEME_QUOTES 3
 #define LEXER_MODE_LEXEME_WORD 4
 #define LEXER_MODE_NUMERIC 5
+// $$ or $BODY$ quoted expressions
+#define LEXER_MODE_CUSTOM_QUOTE 6
+#define LEXER_MODE_CONTENT_QUOTED 7
 
 class Lexer
 {
@@ -130,6 +133,8 @@ protected:
 
     IOMemoryBuffer* lexemeWriter;
 
+    char *quote;
+
     TokenStream* tokenStream;
 
     int currentLine;
@@ -227,6 +232,12 @@ protected:
                     return;
                 }
 
+                if (symbol == '$') {
+                    this->mode = LEXER_MODE_CUSTOM_QUOTE;
+                    this->appendCurrentLexeme(symbol);
+                    return;
+                }
+
                 break;
             }
 
@@ -316,6 +327,58 @@ protected:
                 Token* token = new TokenLexemeNumeric(this->currentLine, this->currentColumn, this->lexemeWriter);
                 this->tokenStream->add(token);
                 this->lexemeWriter = NULL;
+                return;
+            }
+
+            case LEXER_MODE_CUSTOM_QUOTE: {
+                if (symbol != '$') {
+                    this->appendCurrentLexeme(symbol);
+                    return;
+                }
+
+                this->mode = LEXER_MODE_CONTENT_QUOTED;
+
+                int lexemeLength = this->lexemeWriter->length();
+                char *pLexeme = new char[lexemeLength];
+                this->lexemeWriter->read(pLexeme, lexemeLength);
+                this->lexemeWriter->setPosition(0);
+                this->quote = pLexeme;
+
+                this->appendCurrentLexeme(symbol);
+                Token* token = new TokenCustomQuote(this->currentLine, this->currentColumn, this->lexemeWriter);
+                this->tokenStream->add(token);
+                this->lexemeWriter = NULL;
+                return;
+            }
+
+            case LEXER_MODE_CONTENT_QUOTED: {
+                if (symbol == '$') {
+                    // проверяем впереди идущие символы
+                    int lengthQuote = strlen(this->quote);
+                    bool isQuote = true;
+
+                    for (int i = 1; i < lengthQuote; ++i) {
+                        char forwardedSymbol = this->getForwardCharacter(i);
+                        if (forwardedSymbol != this->quote[i]) {
+                            isQuote = false;
+                            break;
+                        }
+                    }
+
+                    if (isQuote) {
+                        // если достигли закрывающейся скобки, записываем токен
+                        this->mode = LEXER_MODE_DEFAULT;
+                        Token *token = new TokenLexemeQuote(this->currentLine, this->currentColumn, this->lexemeWriter);
+                        this->tokenStream->add(token);
+                        this->lexemeWriter = NULL;
+                        // @todo добавить в поток закрывающий токен-кавычку
+                        this->currentPosition += lengthQuote;
+                        this->currentColumn += lengthQuote;
+                        return;
+                    }
+                }
+
+                this->appendCurrentLexeme(symbol);
                 return;
             }
         }
