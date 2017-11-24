@@ -1,4 +1,11 @@
-//
-// Created by Данковцев Александр on 24.11.17.
-//
+class ParenthesisClose : public Token
+{
+public:
+    ParenthesisClose(int line, int column, IOReader* reader) : Token(line, column)
+    {
+        this->reader = reader;
+    }
 
+protected:
+    IOReader* reader;
+};
