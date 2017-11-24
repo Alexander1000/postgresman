@@ -8,4 +8,7 @@
 #include "parenthesis_open.cpp"
 #include "parenthesis_close.cpp"
 
+#include "square_bracket_open.cpp"
+#include "square_bracket_close.cpp"
+
 #include "token_stream.cpp"

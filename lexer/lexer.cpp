@@ -201,6 +201,22 @@ protected:
                     return;
                 }
 
+                if (symbol == '[') {
+                    this->appendCurrentLexeme(symbol);
+                    Token *token = new SquareBracketOpen(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    this->tokenStream->add(token);
+                    this->lexemeWriter = NULL;
+                    return;
+                }
+
+                if (symbol == ']') {
+                    this->appendCurrentLexeme(symbol);
+                    Token *token = new SquareBracketClose(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    this->tokenStream->add(token);
+                    this->lexemeWriter = NULL;
+                    return;
+                }
+
                 break;
             }
 
