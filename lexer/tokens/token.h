@@ -13,5 +13,6 @@
 
 #include "comma.cpp"
 #include "semicolon.cpp"
+#include "dot.cpp"
 
 #include "token_stream.cpp"

@@ -221,6 +221,12 @@ protected:
                     return;
                 }
 
+                if (symbol == '.') {
+                    Token *token = new Dot(this->currentLine, this->currentColumn);
+                    this->tokenStream->add(token);
+                    return;
+                }
+
                 break;
             }
 
