@@ -186,34 +186,32 @@ protected:
                 }
 
                 if (symbol == '(') {
-                    this->appendCurrentLexeme(symbol);
-                    Token *token = new ParenthesisOpen(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    Token *token = new ParenthesisOpen(this->currentLine, this->currentColumn);
                     this->tokenStream->add(token);
-                    this->lexemeWriter = NULL;
                     return;
                 }
 
                 if (symbol == ')') {
-                    this->appendCurrentLexeme(symbol);
-                    Token *token = new ParenthesisClose(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    Token *token = new ParenthesisClose(this->currentLine, this->currentColumn);
                     this->tokenStream->add(token);
-                    this->lexemeWriter = NULL;
                     return;
                 }
 
                 if (symbol == '[') {
-                    this->appendCurrentLexeme(symbol);
-                    Token *token = new SquareBracketOpen(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    Token *token = new SquareBracketOpen(this->currentLine, this->currentColumn);
                     this->tokenStream->add(token);
-                    this->lexemeWriter = NULL;
                     return;
                 }
 
                 if (symbol == ']') {
-                    this->appendCurrentLexeme(symbol);
-                    Token *token = new SquareBracketClose(this->currentLine, this->currentColumn, this->lexemeWriter);
+                    Token *token = new SquareBracketClose(this->currentLine, this->currentColumn);
                     this->tokenStream->add(token);
-                    this->lexemeWriter = NULL;
+                    return;
+                }
+
+                if (symbol == ',') {
+                    Token *token = new Comma(this->currentLine, this->currentColumn);
+                    this->tokenStream->add(token);
                     return;
                 }
 
