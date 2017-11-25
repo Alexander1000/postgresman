@@ -1,5 +1,6 @@
 #include "buffer/io_buffer.h"
 #include "lexer/lexer.h"
+#include "syntaxer/syntaxer.h"
 
 class Validator
 {
@@ -19,6 +20,8 @@ public:
     bool validate()
     {
         this->lexer->parse();
+        Syntaxer *syntaxer = new Syntaxer(this->lexer->getTokenStream());
+        syntaxer->analyze();
         return true;
     }
 

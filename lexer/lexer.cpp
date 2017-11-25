@@ -113,6 +113,11 @@ public:
             }
         }
     }
+
+    TokenStream* getTokenStream()
+    {
+        return this->tokenStream;
+    }
 protected:
     IOReader* reader;
     KeywordList keywords;
