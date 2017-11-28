@@ -1,0 +1,22 @@
+insert:
+  name: 'insert'
+  description: 'insert into <schema>.<table> (column1, column2, column3) values (val1, val2, val3);'
+  tokens:
+    - name: insert
+      kind: Keyword
+    - name: into
+      kind: Keyword
+    - name: schemaName
+      kind: Keyword | Word
+    - name: dot
+      kind: Dot
+    - name: table
+      kind: Keyword | Word
+    - name: open_parenthesis
+      kind: ParenthesisOpen
+    - name: columnName
+      kind: Keyword | Word
+    - name: comma
+      kind: Comma
+    - name: close_parenthesis
+      kind: ParenthesisClose
