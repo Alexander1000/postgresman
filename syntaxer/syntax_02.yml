@@ -1,14 +1,44 @@
 insert:
   name: 'insert'
   description: 'insert into <schema>.<table> (column1, column2, column3) values (val1, val2, val3);'
+  kind: DirectSubsetRules # прямой порядок применения под правил
   rules:
-    - name: rule1
-      kind: DirectOrder
+    # правило для последовательности insert into ...
+    - name: initial-keyword
+      kind: TokenDirectOrder # прямой порядок следования токенов
       tokens:
         - name: insert
           kind: Keyword
+          value: insert # ожидаемое значение токена
         - name: into
           kind: Keyword
+          value: into # ожидаемое значение токена
+
+    # правила для именования таблиц
+    - name: schema-table-name
+      kind: OneOfSubsetRules
+      subset:
+        - name: schema-and-table
+          rules:
+            - name: token-required
+              kind: TokenDirectOrder
+              tokens:
+                - name: schema
+                  kind: Word
+                  pattern: '[a-zA-Z][a-zA-Z0-9]*'
+                - name: separator
+                  kind: Dot
+                - name: tableName
+                  kind: Word
+                  pattern: '[a-zA-Z][a-zA-Z0-9]*'
+        - name: only-table
+          rules:
+            - name: token-required
+              kind: TokenDirectOrder
+              tokens:
+                - name: tableName
+                  kind: Word
+                  pattern: '[a-zA-Z][a-zA-Z0-9]*'
 
     - name: rule2
       kind: Optional
