@@ -1,14 +1,14 @@
 insert:
   name: 'insert'
   description: 'insert into <schema>.<table> (column1, column2, column3) values (val1, val2, val3);'
-  kind: DirectSubsetRules # прямой порядок применения под правил
+  kind: DirectSubsetRules # прямой порядок применения набора правил
   rules:
     # правило для последовательности insert into ...
     - name: initial-keyword
       kind: TokenDirectOrder # прямой порядок следования токенов
       tokens:
         - name: insert
-          kind: Keyword
+          kind: Keyword # тип токена
           value: insert # ожидаемое значение токена
         - name: into
           kind: Keyword
@@ -39,6 +39,32 @@ insert:
                 - name: tableName
                   kind: Word
                   pattern: '[a-zA-Z][a-zA-Z0-9]*'
+
+    # (column1, column2, column3)
+    - name: list-columns
+      kind: DirectSubsetRules
+      rules:
+        - name: open-parenthesis
+          kind: TokenDirectOrder
+          tokens:
+            - name: open
+              kind: ParenthesisOpen
+
+        - name: list-columns
+          kind: RepeatDirectOrder
+          tokens:
+            - name: val
+              kind: Keyword | Word
+            - name: comma
+              kind: Comma
+          skipLastToken: true
+
+        - name: close-parenthesis
+          kind: TokenDirectOrder
+          tokens:
+            - name: close
+              kind: ParenthesisClose
+
 
     - name: rule2
       kind: Optional
