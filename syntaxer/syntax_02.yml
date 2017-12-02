@@ -65,64 +65,44 @@ insert:
             - name: close
               kind: ParenthesisClose
 
-
-    - name: rule2
-      kind: Optional
+    - name: values
+      kind: TokenDirectOrder
       tokens:
-        - name: schemaName
-          kind: Keyword | Word
-        - name: dot
-          kind: Dot
-
-    - name: rule3
-      kind: DirectOrder
-      tokens:
-        - name: table
-          kind: Keyword | Word
-        - name: open_parenthesis
-          kind: ParenthesisOpen
-
-    - name: rule4
-      kind: RepeatDirectOrder
-      tokens:
-        - name: column
-          kind: Keyword | Word
-        - name: comma
-          kind: Comma
-          useInLast: false
-
-    - name: rule5
-      kind: DirectOrder
-      tokens:
-        - name: close_parenthesis
-          kind: ParenthesisClose
         - name: values
           kind: Keyword
+          value: values
 
-    - name: rule6
-      kind: RepeatRules
+    # (val1, val2, val3), (val1, val2, val3)
+    - parthesis-list
+      kind: DirectSubsetRules
       rules:
-        - name: rule_values
-          kind: DirectOrder
-          tokens:
-            - name: open
-              kind: ParenthesisOpen
-        - name: values
-          kind: RepeatDirectOrder
-          tokens:
-            - name: val
-              kind: Keyword | Word
-            - name: comma
-              kind: Comma
-              useInLast: false
-        - name: rule_close
-          kind: DirectOrder
-          tokens:
-           - name: close
-             kind: ParenthesisClose
-        - name: close_list_values
-          kind: DirectOrder
-          tokens:
-            - name: comma
-              kind: Comma
-          useInLast: false
+        - name: list-values
+          kind: DirectSubsetRules
+          rules:
+            - name: open-parenthesis
+              kind: TokenDirectOrder
+              tokens:
+                - name: open
+                  kind: ParenthesisOpen
+            - name: list-values
+              kind: RepeatDirectOrder
+              tokens:
+                - name: val
+                  kind: Keyword | Word
+                - name: comma
+                  kind: Comma
+              skipLastToken: true
+            - name: close-parenthesis
+              kind: TokenDirectOrder
+              tokens:
+                - name: close
+                  kind: ParenthesisClose
+        - name: comma
+          kind: Comma
+      skipLastRule: true
+
+    - name: semicolon
+      kind: TokenDirectOrder
+      tokens:
+        - name: semicolon
+          kind: Semicolon
